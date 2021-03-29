@@ -116,16 +116,16 @@ public class ImageProcessor extends FunctioalForEachLoops {
 			int nextX = 1;
 			int nextY = 1;
 
-			if(x>=inWidth-1){
+			if(x >= inWidth - 1) {
 				nextX = -1;
 			}
-			if(y>=inHeight-1){
+			if(y >= inHeight - 1) {
 				nextY = -1;
 			}
 			int currentColor =  new Color(newWorkingImage.getRGB(x, y)).getBlue();
-			int Dx = currentColor -  new Color(newWorkingImage.getRGB(x+nextX, y)).getBlue();
-			int Dy = currentColor -  new Color(newWorkingImage.getRGB(x, y+nextY)).getBlue();
-			int nextColor =Math.min((int) Math.sqrt((Math.pow(Dx,2) + Math.pow(Dy,2))/2),255);
+			int Dx = currentColor - new Color(newWorkingImage.getRGB(x + nextX, y)).getBlue();
+			int Dy = currentColor - new Color(newWorkingImage.getRGB(x, y + nextY)).getBlue();
+			int nextColor = Math.min((int) Math.sqrt((Math.pow(Dx,2) + Math.pow(Dy, 2)) / 2), 255);
 			Color color = new Color(nextColor,nextColor,nextColor);
 			ans.setRGB(x, y, color.getRGB());
 		});

@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu/cg/ImageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/ImageProcessor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,5 +91,31 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="-1472" y="149" width="1072" height="843" key="#Project_Structure" timestamp="1616848477618">
+      <screen x="-1920" y="-17" width="1920" height="1175" />
+    </state>
+    <state x="-1472" y="149" width="1072" height="843" key="#Project_Structure/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616848477618" />
+    <state width="1878" height="259" key="GridCell.Tab.0.bottom" timestamp="1616847414591">
+      <screen x="-1920" y="-17" width="1920" height="1175" />
+    </state>
+    <state width="1878" height="259" key="GridCell.Tab.0.bottom/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414591" />
+    <state width="1878" height="259" key="GridCell.Tab.0.bottom/0.25.1920.969@0.25.1920.969" timestamp="1616513832964" />
+    <state width="1878" height="259" key="GridCell.Tab.0.center" timestamp="1616847414590">
+      <screen x="-1920" y="-17" width="1920" height="1175" />
+    </state>
+    <state width="1878" height="259" key="GridCell.Tab.0.center/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414590" />
+    <state width="1878" height="259" key="GridCell.Tab.0.center/0.25.1920.969@0.25.1920.969" timestamp="1616513832962" />
+    <state width="1878" height="259" key="GridCell.Tab.0.left" timestamp="1616847414587">
+      <screen x="-1920" y="-17" width="1920" height="1175" />
+    </state>
+    <state width="1878" height="259" key="GridCell.Tab.0.left/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414587" />
+    <state width="1878" height="259" key="GridCell.Tab.0.left/0.25.1920.969@0.25.1920.969" timestamp="1616513832961" />
+    <state width="1878" height="259" key="GridCell.Tab.0.right" timestamp="1616847414590">
+      <screen x="-1920" y="-17" width="1920" height="1175" />
+    </state>
+    <state width="1878" height="259" key="GridCell.Tab.0.right/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414590" />
+    <state width="1878" height="259" key="GridCell.Tab.0.right/0.25.1920.969@0.25.1920.969" timestamp="1616513832962" />
   </component>
 </project>

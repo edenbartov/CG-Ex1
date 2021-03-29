@@ -38,18 +38,22 @@ public class BasicSeamsCarver extends ImageProcessor {
 	// TODO :  Decide on the fields your BasicSeamsCarver should include. Refer to the recitation and homework 
 			// instructions PDF to make an educated decision.
 	private int[][] seams;
-	private double[][] cost;
-	private int[][] energy;
+	private long[][] cost;
+	private long[][] energy;
 	BufferedImage gradientMag;
-	final int PADDING = 2;
+	private int rows;
+	private int cols;
 
 	public BasicSeamsCarver(Logger logger, BufferedImage workingImage,
 			int outWidth, int outHeight, RGBWeights rgbWeights) {
 		super((s) -> logger.log("Seam carving: " + s), workingImage, rgbWeights, outWidth, outHeight);
 		// TODO : Include some additional initialization procedures.
 		this.gradientMag = gradientMagnitude();
-		cost = new double[this.inWidth + PADDING][this.inHeight + PADDING];
-		energy = new int[this.inWidth + PADDING][this.inHeight + PADDING];
+		cost = new long[this.inWidth][this.inHeight];
+		energy = new long[this.inWidth][this.inHeight];
+		rows = this.inHeight;
+		cols = this.inWidth;
+
 	}
 	// TODO : calculate energy on all the pixels
 		// TODO : dynamicly calculate min path
@@ -64,58 +68,138 @@ public class BasicSeamsCarver extends ImageProcessor {
 				// and 'numberOfHorizontalSeamsToCarve' horizontal seams from the image.
 				// Note you must consider the 'carvingScheme' parameter in your procedure.
 				// Return the resulting image.
-		throw new UnimplementedMethodException("carveImage");
+		energyCalc();
+		for (int x = 0; x < cols - 1; x++) {
+			for (int y = 0; y < cols; y++) {
+				try {
+					if (x == 0) {
+						cost[x][y] = energy[x][y];
+					} else {
+						cost[x][y] = energy[x][y] + horizontalCostCalc(x, y);
+					}
+				} catch (Exception e) {
+					logger.log("carveImage");
+					System.out.println(x + ", " + y);
+				}
+			}
+		}
+
+		LinkedList<Coordinate> seam = seamBacktrack();
+		BufferedImage carvedImage = workingImage;
+		for (Coordinate c : seam) {
+			try {
+				carvedImage.setRGB(c.X, c.Y, 0x000F);
+			} catch (Exception e) {
+				logger.log("carveImage");
+				System.out.println(c.X + ", " + c.Y);
+			}
+
+		}
+		return carvedImage;
 	}
 
-	private void energyCalc(){
-		forEach((y,x) -> {
-			this.energy[x+1][y+1] = new Color(gradientMag.getRGB(x,y)).getBlue();
+	private void energyCalc() {
+		forEach((y, x) -> {
+			this.energy[x][y] = new Color(gradientMag.getRGB(x, y)).getBlue();
 		});
 	}
 
-	private void horizontalCostCalc(){
-		forEach((y,x) -> {
-			int i = x+1;
-			int j = y+1;
-			//base case for horizontal
-	 		if(x==0){
-				this.cost[i][j] = energy[i][j];
-	 		}else{ // not the base case
-				int cU = Math.abs(energy[i - 1][j] - energy[i][j - 1]) + Math.abs(energy[i - 1][j] - energy[i + 1][j]);
-				int cH = Math.abs(energy[i - 1][j] - energy[i + 1][j]);
-				int cD = Math.abs(energy[i + 1][j] - energy[i][j - 1]) + Math.abs(energy[i - 1][j] - energy[i + 1][j]);
-				this.cost[i][j] = energy[i][j] +  Math.min(cost[i-1][j-1] + cU,Math.min(cost[i-1][j] + cH,cost[i-1][j+1] + cD));
-
-			}
-			});
+	private long horizontalCostCalc(int x, int y) {
+		long cU, cH, cD;
+		if (y == 0) {
+			cU = Long.MAX_VALUE;
+			cH = cost[x - 1][y];
+			cD = Math.abs(energy[x][y + 1] - energy[x - 1][y]) + cost[x - 1][y + 1];
+		} else if (y == cost[0].length - 1) {
+			cU = Math.abs(energy[x][y - 1] - energy[x - 1][y]) + cost[x - 1][y - 1];
+			cH = cost[x - 1][y];
+			cD = Long.MAX_VALUE;
+		} else {
+			cU = Math.abs(energy[x - 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
+			cH = Math.abs(energy[x - 1][y] - energy[x + 1][y]);
+			cD = Math.abs(energy[x + 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
 		}
-	private LinkedList<Coordinate> seamBacktrack(){
-		double min_cost = Integer.MAX_VALUE;
-		Coordinate first_index = new Coordinate(inWidth,0);
-		for(int y = 1; y<=inHeight;y++){
-			if (cost[inWidth][y]<min_cost) {
-				min_cost = cost[inWidth][y];
-				first_index = new Coordinate(inWidth-1,y-1);
-			}
-		}
-		LinkedList<Coordinate> seam = new LinkedList<>();
-		seam.add(first_index);
-		Coordinate cur_coordinate = first_index;
-		for (int x = inWidth-1; x >0 ; x--) {
-			int old_y = cur_coordinate.Y;
-			for (int y = old_y-1; y <= old_y+1 ; y++) {
-
-
-			}
-
-
-
-		}
-
-
-		return null;
+		return Math.min(cU, Math.min(cH, cD));
 	}
+
+	private LinkedList<Coordinate> seamBacktrack() {
+		LinkedList<Coordinate> seam = new LinkedList<>();
+		int minIndex = 0;
+		for (int y = 1; y < rows; y++) {
+			if (cost[cols - 1][y] < cost[cols - 1][minIndex]) {
+				minIndex = y;
+			}
+		}
+
+		Coordinate current = new Coordinate(cols - 1, minIndex);
+		seam.add(current);
+
+		for (int x = cols - 1; x > 0; x--) {
+			int y = current.Y;
+			long mid = cost[x - 1][y];
+			long up = y > 0 ? cost[x - 1][y - 1] : Long.MAX_VALUE;
+			long down = y < rows - 1 ? cost[x - 1][y + 1] : Long.MAX_VALUE;
+			if (up < mid && up < down) {
+				y--;
+			} else if (down < mid && down < up) {
+				y++;
+			}
+			current = new Coordinate(x - 1, y);
+			seam.add(0, current);
+		}
+		return seam;
+	}
+
+	private void refactorMatrix(long[][] m, LinkedList<Coordinate> seam) {
+		long[][] newCost = new long[cols][rows - 1];
+		long[][] newEnergy = new long[cols][rows - 1];
+		for (int x = 0; x < m.length; x++) {
+			for (int y = 0; y < m[0].length - 1; y++) {
+				if (y < seam.get(x).Y) {
+					newCost[x][y] = m[x][y];
+					newEnergy[x][y] = m[x][y];
+				} else if (y > seam.get(x).Y) {
+					newCost[x][y] = m[x][y + 1];
+					newEnergy[x][y] = m[x][y + 1];
+				}
+			}
+		}
+		this.cost = newCost;
+		this.energy = newEnergy;
+		rows--;
+	}
+
 	private void energyCalc(LinkedList<Coordinate> currentSeam){
+		BufferedImage newWorkingImage = greyscale();
+		for (Coordinate c : currentSeam) {
+			int x = c.X;
+			int y = c.Y;
+			int prevY = y - 1;
+			int nextY = y + 1;
+			if (prevY >= 0 && nextY <= rows - 1) {
+				int currentColor =  new Color(newWorkingImage.getRGB(x, prevY)).getBlue();
+				int Dy = currentColor - new Color(newWorkingImage.getRGB(x, nextY)).getBlue();
+			}
+			
+
+
+
+//			int nextX = 1;
+//			int nextY = 1;
+//
+//			if(x >= inWidth - 1) {
+//				nextX = -1;
+//			}
+//			if(y >= inHeight - 1) {
+//				nextY = -1;
+//			}
+//			int currentColor =  new Color(newWorkingImage.getRGB(x, y)).getBlue();
+//			int Dx = currentColor - new Color(newWorkingImage.getRGB(x + nextX, y)).getBlue();
+//			int Dy = currentColor - new Color(newWorkingImage.getRGB(x, y + nextY)).getBlue();
+//			int nextColor = Math.min((int) Math.sqrt((Math.pow(Dx,2) + Math.pow(Dy, 2)) / 2), 255);
+//			Color color = new Color(nextColor,nextColor,nextColor);
+//			ans.setRGB(x, y, color.getRGB());
+		}
 
 	}
 
