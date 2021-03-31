@@ -40,6 +40,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 	private int[][] seams;
 	private long[][] cost;
 	private long[][] energy;
+	private Coordinate[][] indexMatrix;
 	BufferedImage gradientMag;
 	private int rows;
 	private int cols;
@@ -53,6 +54,12 @@ public class BasicSeamsCarver extends ImageProcessor {
 		energy = new long[this.inWidth][this.inHeight];
 		rows = this.inHeight;
 		cols = this.inWidth;
+		indexMatrix = new Coordinate[cols][rows];
+		for (int i = 0; i < cols; i++) {
+			for (int j = 0; j < rows; j++) {
+				indexMatrix[i][j] = new Coordinate(i, j);
+			}
+		}
 
 	}
 	// TODO : calculate energy on all the pixels
@@ -70,16 +77,11 @@ public class BasicSeamsCarver extends ImageProcessor {
 				// Return the resulting image.
 		energyCalc();
 		for (int x = 0; x < cols - 1; x++) {
-			for (int y = 0; y < cols; y++) {
-				try {
-					if (x == 0) {
-						cost[x][y] = energy[x][y];
-					} else {
-						cost[x][y] = energy[x][y] + horizontalCostCalc(x, y);
-					}
-				} catch (Exception e) {
-					logger.log("carveImage");
-					System.out.println(x + ", " + y);
+			for (int y = 0; y < rows; y++) {
+				if (x == 0) {
+					cost[x][y] = energy[x][y];
+				} else {
+					cost[x][y] = energy[x][y] + horizontalCostCalc(x, y);
 				}
 			}
 		}
@@ -169,6 +171,22 @@ public class BasicSeamsCarver extends ImageProcessor {
 		rows--;
 	}
 
+	private void calcNewMatrix(LinkedList<Coordinate> seam) {
+		Coordinate[][] tempIndexMatrix = new Coordinate[rows][cols];
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (seam.get(x).Y < y) {
+					tempIndexMatrix[x][y] = indexMatrix[x][y];
+				} else if (seam.get(x).Y > y) {
+					tempIndexMatrix[x][y] = indexMatrix[x][y + 1];
+				} else {
+
+				}
+			}
+		}
+		this.indexMatrix = tempIndexMatrix;
+	}
+
 	private void energyCalc(LinkedList<Coordinate> currentSeam){
 		BufferedImage newWorkingImage = greyscale();
 		for (Coordinate c : currentSeam) {
@@ -180,7 +198,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 				int currentColor =  new Color(newWorkingImage.getRGB(x, prevY)).getBlue();
 				int Dy = currentColor - new Color(newWorkingImage.getRGB(x, nextY)).getBlue();
 			}
-			
+
 
 
 

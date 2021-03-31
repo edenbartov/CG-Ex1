@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand />
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1856a456-4b48-4475-a19b-dde9c5c96cd3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu/cg/ImageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/ImageProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,6 +36,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
