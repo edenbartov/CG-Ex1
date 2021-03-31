@@ -3,8 +3,6 @@ package edu.cg;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.SplittableRandom;
 
 
 public class BasicSeamsCarver extends ImageProcessor {
@@ -37,29 +35,37 @@ public class BasicSeamsCarver extends ImageProcessor {
 	
 	// TODO :  Decide on the fields your BasicSeamsCarver should include. Refer to the recitation and homework 
 			// instructions PDF to make an educated decision.
-	private int[][] seams;
 	private long[][] cost;
 	private long[][] energy;
 	private Coordinate[][] indexMatrix;
 	BufferedImage gradientMag;
+	BufferedImage greyscaled;
+	BufferedImage coloredSeamsImage;
 	private int rows;
 	private int cols;
+	LinkedList<LinkedList<Coordinate>> horizontalSeams;
 
 	public BasicSeamsCarver(Logger logger, BufferedImage workingImage,
 			int outWidth, int outHeight, RGBWeights rgbWeights) {
 		super((s) -> logger.log("Seam carving: " + s), workingImage, rgbWeights, outWidth, outHeight);
 		// TODO : Include some additional initialization procedures.
 		this.gradientMag = gradientMagnitude();
+		this.greyscaled = greyscale();
+		this.coloredSeamsImage = deepCopy();
+
 		cost = new long[this.inWidth][this.inHeight];
 		energy = new long[this.inWidth][this.inHeight];
 		rows = this.inHeight;
 		cols = this.inWidth;
+
 		indexMatrix = new Coordinate[cols][rows];
-		for (int i = 0; i < cols; i++) {
-			for (int j = 0; j < rows; j++) {
-				indexMatrix[i][j] = new Coordinate(i, j);
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				indexMatrix[x][y] = new Coordinate(x, y);
 			}
 		}
+
+		horizontalSeams = new LinkedList<>();
 
 	}
 	// TODO : calculate energy on all the pixels
@@ -75,38 +81,45 @@ public class BasicSeamsCarver extends ImageProcessor {
 				// and 'numberOfHorizontalSeamsToCarve' horizontal seams from the image.
 				// Note you must consider the 'carvingScheme' parameter in your procedure.
 				// Return the resulting image.
+
+		switch (carvingScheme) {
+			case VERTICAL_HORIZONTAL: {
+				break;
+			}
+			case HORIZONTAL_VERTICAL: {
+				for (int i = 0; i < numberOfHorizontalSeamsToCarve; i++) {
+					carveHorizontal();
+				}
+				break;
+			}
+			case INTERMITTENT: {
+
+			}
+		}
+
+		return downScaleImage();
+	}
+
+	private void carveHorizontal() {
 		energyCalc();
 		for (int x = 0; x < cols - 1; x++) {
 			for (int y = 0; y < rows; y++) {
 				if (x == 0) {
 					cost[x][y] = energy[x][y];
 				} else {
-					cost[x][y] = energy[x][y] + horizontalCostCalc(x, y);
+					cost[x][y] = energy[x][y] + horizontalCostCalc(this.cost, x, y);
 				}
 			}
 		}
 
 		LinkedList<Coordinate> seam = seamBacktrack();
-		BufferedImage carvedImage = workingImage;
-		for (Coordinate c : seam) {
-			try {
-				carvedImage.setRGB(c.X, c.Y, 0x000F);
-			} catch (Exception e) {
-				logger.log("carveImage");
-				System.out.println(c.X + ", " + c.Y);
-			}
-
-		}
-		return carvedImage;
+		rows--;
+		calcNewIndexMatrix(seam);
+		seam = overrideSeam(seam);
+		horizontalSeams.add(seam);
 	}
 
-	private void energyCalc() {
-		forEach((y, x) -> {
-			this.energy[x][y] = new Color(gradientMag.getRGB(x, y)).getBlue();
-		});
-	}
-
-	private long horizontalCostCalc(int x, int y) {
+	private long horizontalCostCalc(long[][] cost, int x, int y) {
 		long cU, cH, cD;
 		if (y == 0) {
 			cU = Long.MAX_VALUE;
@@ -152,77 +165,86 @@ public class BasicSeamsCarver extends ImageProcessor {
 		return seam;
 	}
 
-	private void refactorMatrix(long[][] m, LinkedList<Coordinate> seam) {
-		long[][] newCost = new long[cols][rows - 1];
-		long[][] newEnergy = new long[cols][rows - 1];
-		for (int x = 0; x < m.length; x++) {
-			for (int y = 0; y < m[0].length - 1; y++) {
-				if (y < seam.get(x).Y) {
-					newCost[x][y] = m[x][y];
-					newEnergy[x][y] = m[x][y];
-				} else if (y > seam.get(x).Y) {
-					newCost[x][y] = m[x][y + 1];
-					newEnergy[x][y] = m[x][y + 1];
-				}
-			}
-		}
-		this.cost = newCost;
-		this.energy = newEnergy;
-		rows--;
+	private Color originalIndexColor(BufferedImage img, Coordinate c) {
+		return new Color(img.getRGB(c.X, c.Y));
 	}
 
-	private void calcNewMatrix(LinkedList<Coordinate> seam) {
-		Coordinate[][] tempIndexMatrix = new Coordinate[rows][cols];
+	private void calcNewIndexMatrix(LinkedList<Coordinate> seam) {
+		Coordinate[][] tempIndexMatrix = new Coordinate[cols][rows];
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				if (seam.get(x).Y < y) {
 					tempIndexMatrix[x][y] = indexMatrix[x][y];
-				} else if (seam.get(x).Y > y) {
+				} else if (seam.get(x).Y >= y) {
 					tempIndexMatrix[x][y] = indexMatrix[x][y + 1];
 				} else {
-
+					System.out.println(x + ", " + y);
 				}
 			}
 		}
 		this.indexMatrix = tempIndexMatrix;
 	}
 
-	private void energyCalc(LinkedList<Coordinate> currentSeam){
-		BufferedImage newWorkingImage = greyscale();
-		for (Coordinate c : currentSeam) {
-			int x = c.X;
-			int y = c.Y;
-			int prevY = y - 1;
-			int nextY = y + 1;
-			if (prevY >= 0 && nextY <= rows - 1) {
-				int currentColor =  new Color(newWorkingImage.getRGB(x, prevY)).getBlue();
-				int Dy = currentColor - new Color(newWorkingImage.getRGB(x, nextY)).getBlue();
+	private void energyCalc() {
+		long[][] newEnergy = new long[cols][rows];
+		int nextX = 1;
+		int nextY = 1;
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows - 1; y++) {
+				if(x >= cols - 1) {
+					nextX = -1;
+				}
+				if(y >= rows - 1) {
+					nextY = -1;
+				}
+				int currentColor =  originalIndexColor(greyscaled, indexMatrix[x][y]).getBlue();
+				int Dx = currentColor - originalIndexColor(greyscaled, indexMatrix[x + nextX][y]).getBlue();
+				int Dy = currentColor - originalIndexColor(greyscaled, indexMatrix[x][y + nextY]).getBlue();
+				int nextColor = Math.min((int) Math.sqrt((Math.pow(Dx,2) + Math.pow(Dy, 2)) / 2), 255);
+				newEnergy[x][y] = nextColor;
 			}
-
-
-
-
-//			int nextX = 1;
-//			int nextY = 1;
-//
-//			if(x >= inWidth - 1) {
-//				nextX = -1;
-//			}
-//			if(y >= inHeight - 1) {
-//				nextY = -1;
-//			}
-//			int currentColor =  new Color(newWorkingImage.getRGB(x, y)).getBlue();
-//			int Dx = currentColor - new Color(newWorkingImage.getRGB(x + nextX, y)).getBlue();
-//			int Dy = currentColor - new Color(newWorkingImage.getRGB(x, y + nextY)).getBlue();
-//			int nextColor = Math.min((int) Math.sqrt((Math.pow(Dx,2) + Math.pow(Dy, 2)) / 2), 255);
-//			Color color = new Color(nextColor,nextColor,nextColor);
-//			ans.setRGB(x, y, color.getRGB());
 		}
-
+		this.energy = newEnergy;
 	}
 
-	private void costCalc(LinkedList<Coordinate> currentSeam){
+	private BufferedImage deepCopy () {
+		BufferedImage newImage = newEmptyInputSizedImage();
+		forEach((y, x) -> {
+			newImage.setRGB(x, y, workingImage.getRGB(x, y));
+		});
+		return newImage;
+	}
 
+	private LinkedList<Coordinate> overrideSeam(LinkedList<Coordinate> seam) {
+		LinkedList<Coordinate> tempSeam = new LinkedList<>();
+		for (Coordinate c : seam) {
+			tempSeam.add(0, indexMatrix[c.X][c.Y]);
+		}
+		return tempSeam;
+	}
+
+	private void colorSeam(LinkedList<Coordinate> seam, int seamColorRGB) {
+		for (Coordinate c : seam) {
+			coloredSeamsImage.setRGB(c.X, c.Y, seamColorRGB);
+		}
+	}
+
+	private BufferedImage downScaleImage() {
+		BufferedImage result = newEmptyOutputSizedImage();
+		System.out.println(cols - indexMatrix.length);
+		System.out.println(rows - indexMatrix[0].length);
+		for (int x = 0; x < indexMatrix.length; x++) {
+			for (int y = 0; y < indexMatrix[0].length; y++) {
+				Coordinate coordinate = indexMatrix[x][y];
+				if (coordinate == null) {
+					System.out.println("null:" + x + ", " + y);
+				}
+				int color = workingImage.getRGB(coordinate.X, coordinate.Y);
+				result.setRGB(x, y, color);
+			}
+		}
+
+		return result;
 	}
 
 	public BufferedImage showSeams(boolean showVerticalSeams, int seamColorRGB) {
@@ -237,6 +259,16 @@ public class BasicSeamsCarver extends ImageProcessor {
 				// from the image.
 				// Then, generate a new image from the input image in which you mark all of the horizontal seams that
 				// were chosen in the Seam Carving process.
-		throw new UnimplementedMethodException("showSeams");
+		if (showVerticalSeams) {
+
+		} else {
+			for (int i = 0; i < numberOfHorizontalSeamsToCarve; i++) {
+				carveHorizontal();
+				for (LinkedList<Coordinate> seam : horizontalSeams) {
+					colorSeam(seam, seamColorRGB);
+				}
+			}
+		}
+		return coloredSeamsImage;
 	}
 }
