@@ -197,19 +197,19 @@ public class BasicSeamsCarver extends ImageProcessor {
 		if(x == cols -1){
 			cR = Long.MAX_VALUE;
 			cV = Long.MAX_VALUE;
-			cL = Math.abs(energy[x][y - 1] - energy[x - 1][y]);
+			cL = Math.abs(energy[x - 1][y] - energy[x][y - 1]);
 			cL += cost[x - 1][y - 1];
 
 		}else if(x == 0){
-			cR = Math.abs(energy[x][y - 1] - energy[x + 1][y]);
+			cR = Math.abs(energy[x + 1][y] - energy[x][y - 1]);
 			cV = Long.MAX_VALUE;
 			cL = Long.MAX_VALUE;
 			cR += cost[x + 1][y - 1];
 
 		}else {
-			cR = Math.abs(energy[x][y - 1] - energy[x + 1][y]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
-			cV = Math.abs(energy[x-1][y] - energy[x + 1][y]);
-			cL = Math.abs(energy[x][y - 1] - energy[x - 1][y]) + Math.abs(energy[x-1][y] - energy[x+1][y]);
+			cR = Math.abs(energy[x + 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
+			cV = Math.abs(energy[x - 1][y] - energy[x + 1][y]);
+			cL = Math.abs(energy[x - 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
 
 			cR += cost[x + 1][y - 1];
 			cV += cost[x][y - 1];
