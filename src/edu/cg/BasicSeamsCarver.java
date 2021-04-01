@@ -45,6 +45,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 	private int rows;
 	private int cols;
 	LinkedList<LinkedList<Coordinate>> horizontalSeams;
+	LinkedList<LinkedList<Coordinate>> verticalSeams;
 
 	public BasicSeamsCarver(Logger logger, BufferedImage workingImage,
 			int outWidth, int outHeight, RGBWeights rgbWeights) {
@@ -68,6 +69,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 		}
 
 		horizontalSeams = new LinkedList<>();
+		verticalSeams = new LinkedList<>();
 
 	}
 
@@ -81,16 +83,36 @@ public class BasicSeamsCarver extends ImageProcessor {
 
 		switch (carvingScheme) {
 			case VERTICAL_HORIZONTAL: {
+				for (int i = 0; i < numberOfVerticalSeamsToCarve; i++) {
+					carveVertical();
+				}
+				for (int i = 0; i < numberOfHorizontalSeamsToCarve; i++) {
+					carveHorizontal();
+				}
 				break;
 			}
 			case HORIZONTAL_VERTICAL: {
 				for (int i = 0; i < numberOfHorizontalSeamsToCarve; i++) {
 					carveHorizontal();
 				}
+				for (int i = 0; i < numberOfVerticalSeamsToCarve; i++) {
+					carveVertical();
+				}
 				break;
 			}
 			case INTERMITTENT: {
-
+				int tempVertical = numberOfVerticalSeamsToCarve;
+				int tempHorizontal = numberOfHorizontalSeamsToCarve;
+				while (tempVertical + tempHorizontal > 0){
+					if (tempVertical>0){
+						carveVertical();
+						tempVertical--;
+					}
+					if(tempHorizontal>0){
+						carveHorizontal();
+						tempHorizontal--;
+					}
+				}
 			}
 		}
 
@@ -112,28 +134,28 @@ public class BasicSeamsCarver extends ImageProcessor {
 
 		LinkedList<Coordinate> seam = horizontalSeamBacktrack();
 		rows--;
-		horizontalNewIndexMatrix(seam);
+		newIndexMatrix(seam,false);
 		seam = overrideSeam(seam);
 		horizontalSeams.add(seam);
 	}
 	private void carveVertical() {
-//		energyCalc();
-//		backtrack = new int[cols][rows];
-//		for (int x = 0; x < cols; x++) {
-//			for (int y = 0; y < rows; y++) {
-//				if (x == 0) {
-//					cost[x][y] = energy[x][y];
-//				} else {
-//					horizontalCostCalc(this.cost, x, y);
-//				}
-//			}
-//		}
-//
-//		LinkedList<Coordinate> seam = seamBacktrack();
-//		rows--;
-//		calcNewIndexMatrix(seam);
-//		seam = overrideSeam(seam);
-//		horizontalSeams.add(seam);
+		energyCalc();
+		backtrack = new int[cols][rows];
+		for (int x = 0; x < cols; x++) {
+			for (int y = 0; y < rows; y++) {
+				if (y == 0) {
+					cost[x][y] = energy[x][y];
+				} else {
+					verticalCostCalc(this.cost, x, y);
+				}
+			}
+		}
+
+		LinkedList<Coordinate> seam = verticalSeamBacktrack();
+		cols--;
+		newIndexMatrix(seam,true);
+		seam = overrideSeam(seam);
+		verticalSeams.add(seam);
 	}
 
 	private void horizontalCostCalc(long[][] cost, int x, int y) {
@@ -158,21 +180,56 @@ public class BasicSeamsCarver extends ImageProcessor {
 			cH += cost[x-1][y];
 			cD += cost[x-1][y+1];
 		}
-		long min = Math.min(cU, Math.min(cH, cD));
-		if(min == cU){
+//		long min = Math.min(cU, Math.min(cH, cD));
+//		if(min == cU){
+//			backtrack[x][y] = -1;
+//		}else if(min == cH){
+//			backtrack[x][y] = 0 ;
+//		}else {
+//			backtrack[x][y] = 1;
+//		}
+//		cost[x][y] = energy[x][y] + min;
+		setCost(x,y,cU,cH,cD);
+	}
+
+	private void verticalCostCalc(long[][] cost, int x, int y) {
+		long cR, cV, cL;
+		if(x == cols -1){
+			cR = Long.MAX_VALUE;
+			cV = Long.MAX_VALUE;
+			cL = Math.abs(energy[x][y - 1] - energy[x - 1][y]);
+			cL += cost[x - 1][y - 1];
+
+		}else if(x == 0){
+			cR = Math.abs(energy[x][y - 1] - energy[x + 1][y]);
+			cV = Long.MAX_VALUE;
+			cL = Long.MAX_VALUE;
+			cR += cost[x + 1][y - 1];
+
+		}else {
+			cR = Math.abs(energy[x][y - 1] - energy[x + 1][y]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
+			cV = Math.abs(energy[x-1][y] - energy[x + 1][y]);
+			cL = Math.abs(energy[x][y - 1] - energy[x - 1][y]) + Math.abs(energy[x-1][y] - energy[x+1][y]);
+
+			cR += cost[x + 1][y - 1];
+			cV += cost[x][y - 1];
+			cL += cost[x - 1][y - 1];
+		}
+
+		setCost(x,y,cL,cV,cR);
+	}
+
+	private void setCost(int x ,int y, long uL, long hV, long dR){
+		long min = Math.min(dR, Math.min(hV, uL));
+		if(min == uL){
 			backtrack[x][y] = -1;
-		}else if(min == cH){
+		}else if(min == hV){
 			backtrack[x][y] = 0 ;
 		}else {
 			backtrack[x][y] = 1;
 		}
 		cost[x][y] = energy[x][y] + min;
 	}
-
-	private void verticalCostCalc(long[][] cost, int x, int y) {
-
-	}
-
 
 	private LinkedList<Coordinate> horizontalSeamBacktrack() {
 		LinkedList<Coordinate> seam = new LinkedList<>();
@@ -195,29 +252,50 @@ public class BasicSeamsCarver extends ImageProcessor {
 	}
 
 	private LinkedList<Coordinate> verticalSeamBacktrack() {
-		return null;
+		LinkedList<Coordinate> seam = new LinkedList<>();
+		int minIndex = 0;
+		for (int x = 1; x < cols; x++) {
+			if (cost[x][rows-1] < cost[minIndex][rows-1]) {
+				minIndex = x;
+			}
+		}
+		Coordinate current = new Coordinate(minIndex,rows-1);
+		seam.add(current);
+
+		for (int y = rows - 1; y > 0; y--) {
+			int x = current.X;
+			x += backtrack[x][y];
+			current = new Coordinate(x , y-1);
+			seam.add(0, current);
+		}
+		return seam;
 	}
 
 	private Color originalIndexColor(BufferedImage img, Coordinate c) {
 		return new Color(img.getRGB(c.X, c.Y));
 	}
 
-	private void horizontalNewIndexMatrix(LinkedList<Coordinate> seam) {
+	private void newIndexMatrix(LinkedList<Coordinate> seam, boolean vertical) {
 		Coordinate[][] tempIndexMatrix = new Coordinate[cols][rows];
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (seam.get(x).Y <= y) {
-					tempIndexMatrix[x][y] = indexMatrix[x][y+1];
-				} else if (seam.get(x).Y > y) {
-					tempIndexMatrix[x][y] = indexMatrix[x][y];
-				} else {
-					System.out.println(x + ", " + y);
+				if(vertical){
+					if (seam.get(y).X <= x) {
+						tempIndexMatrix[x][y] = indexMatrix[x+1][y];
+					} else if (seam.get(y).X > x) {
+						tempIndexMatrix[x][y] = indexMatrix[x][y];
+					}
+				}
+				else {
+					if (seam.get(x).Y <= y) {
+						tempIndexMatrix[x][y] = indexMatrix[x][y + 1];
+					} else if (seam.get(x).Y > y) {
+						tempIndexMatrix[x][y] = indexMatrix[x][y];
+					}
 				}
 			}
 		}
 		this.indexMatrix = tempIndexMatrix;
-	}
-	private void verticalNewIndexMatrix(LinkedList<Coordinate> seam) {
 	}
 
 	private void energyCalc() {
@@ -292,7 +370,12 @@ public class BasicSeamsCarver extends ImageProcessor {
 				// Then, generate a new image from the input image in which you mark all of the horizontal seams that
 				// were chosen in the Seam Carving process.
 		if (showVerticalSeams) {
-			// TODO :  add showVerticalSeams
+			for (int i = 0; i < numberOfVerticalSeamsToCarve; i++) {
+				carveVertical();
+				for (LinkedList<Coordinate> seam : verticalSeams) {
+					colorSeam(seam, seamColorRGB);
+				}
+			}
 		} else {
 			for (int i = 0; i < numberOfHorizontalSeamsToCarve; i++) {
 				carveHorizontal();
