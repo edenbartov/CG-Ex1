@@ -8,14 +8,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1856a456-4b48-4475-a19b-dde9c5c96cd3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="1856a456-4b48-4475-a19b-dde9c5c96cd3" name="Default Changelist" comment="yarons_commit">
       <change beforePath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/src/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$CarvingScheme.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$CarvingScheme.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$Coordinate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$Coordinate.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +58,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
@@ -80,6 +87,14 @@
       <updated>1616499950438</updated>
       <workItem from="1616499951635" duration="17308000" />
     </task>
+    <task id="LOCAL-00001" summary="yarons_commit">
+      <created>1617267763890</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1617267763890</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,6 +111,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="yarons_commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="yarons_commit" />
   </component>
   <component name="WindowStateProjectService">
     <state width="1878" height="447" key="GridCell.Tab.0.bottom" timestamp="1617267537164">
@@ -118,6 +137,10 @@
     </state>
     <state width="1750" height="203" key="GridCell.Tab.0.right/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401345" />
     <state width="1878" height="447" key="GridCell.Tab.0.right/0.25.1920.969@0.25.1920.969" timestamp="1617267537164" />
+    <state x="560" y="247" key="Vcs.Push.Dialog.v2" timestamp="1617267765719">
+      <screen x="0" y="25" width="1920" height="969" />
+    </state>
+    <state x="560" y="247" key="Vcs.Push.Dialog.v2/0.25.1920.969@0.25.1920.969" timestamp="1617267765719" />
     <state x="715" y="459" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1617263712246">
       <screen x="0" y="25" width="1792" height="1009" />
     </state>
