@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand />
     <select />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1856a456-4b48-4475-a19b-dde9c5c96cd3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/cg/menu/components/ActionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/menu/components/ActionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$CarvingScheme.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$CarvingScheme.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$Coordinate.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$Coordinate.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/menu/components/ActionsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/menu/components/ActionsController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +24,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1q9lziP4SFLVEfG1RZ27dDXoboW" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -33,19 +48,9 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="edu.cg.Main" />
       <module name="src" />
@@ -93,29 +98,26 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1472" y="149" width="1072" height="843" key="#Project_Structure" timestamp="1616848477618">
+    <state width="1750" height="203" key="GridCell.Tab.0.bottom" timestamp="1617209401345">
       <screen x="-1920" y="-17" width="1920" height="1175" />
     </state>
-    <state x="-1472" y="149" width="1072" height="843" key="#Project_Structure/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616848477618" />
-    <state width="1878" height="259" key="GridCell.Tab.0.bottom" timestamp="1616847414591">
+    <state width="1750" height="203" key="GridCell.Tab.0.bottom/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401345" />
+    <state width="1750" height="203" key="GridCell.Tab.0.center" timestamp="1617209401345">
       <screen x="-1920" y="-17" width="1920" height="1175" />
     </state>
-    <state width="1878" height="259" key="GridCell.Tab.0.bottom/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414591" />
-    <state width="1878" height="259" key="GridCell.Tab.0.bottom/0.25.1920.969@0.25.1920.969" timestamp="1616513832964" />
-    <state width="1878" height="259" key="GridCell.Tab.0.center" timestamp="1616847414590">
+    <state width="1750" height="203" key="GridCell.Tab.0.center/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401345" />
+    <state width="1750" height="203" key="GridCell.Tab.0.left" timestamp="1617209401344">
       <screen x="-1920" y="-17" width="1920" height="1175" />
     </state>
-    <state width="1878" height="259" key="GridCell.Tab.0.center/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414590" />
-    <state width="1878" height="259" key="GridCell.Tab.0.center/0.25.1920.969@0.25.1920.969" timestamp="1616513832962" />
-    <state width="1878" height="259" key="GridCell.Tab.0.left" timestamp="1616847414587">
+    <state width="1750" height="203" key="GridCell.Tab.0.left/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401344" />
+    <state width="1750" height="203" key="GridCell.Tab.0.right" timestamp="1617209401345">
       <screen x="-1920" y="-17" width="1920" height="1175" />
     </state>
-    <state width="1878" height="259" key="GridCell.Tab.0.left/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414587" />
-    <state width="1878" height="259" key="GridCell.Tab.0.left/0.25.1920.969@0.25.1920.969" timestamp="1616513832961" />
-    <state width="1878" height="259" key="GridCell.Tab.0.right" timestamp="1616847414590">
-      <screen x="-1920" y="-17" width="1920" height="1175" />
+    <state width="1750" height="203" key="GridCell.Tab.0.right/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401345" />
+    <state x="715" y="459" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1617263712246">
+      <screen x="0" y="25" width="1792" height="1009" />
     </state>
-    <state width="1878" height="259" key="GridCell.Tab.0.right/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1616847414590" />
-    <state width="1878" height="259" key="GridCell.Tab.0.right/0.25.1920.969@0.25.1920.969" timestamp="1616513832962" />
+    <state x="-1154" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617207621705" />
+    <state x="715" y="459" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1792.1009@0.25.1792.1009" timestamp="1617263712246" />
   </component>
 </project>

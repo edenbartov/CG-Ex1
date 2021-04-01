@@ -37,6 +37,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 			// instructions PDF to make an educated decision.
 	private long[][] cost;
 	private long[][] energy;
+	private int[][] backtrack;
 	private Coordinate[][] indexMatrix;
 	BufferedImage gradientMag;
 	BufferedImage greyscaled;
@@ -55,6 +56,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 
 		cost = new long[this.inWidth][this.inHeight];
 		energy = new long[this.inWidth][this.inHeight];
+		backtrack = new int[this.inWidth][this.inHeight];
 		rows = this.inHeight;
 		cols = this.inWidth;
 
@@ -102,12 +104,13 @@ public class BasicSeamsCarver extends ImageProcessor {
 
 	private void carveHorizontal() {
 		energyCalc();
-		for (int x = 0; x < cols - 1; x++) {
+		backtrack = new int[cols][rows];
+		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
 				if (x == 0) {
 					cost[x][y] = energy[x][y];
 				} else {
-					cost[x][y] = energy[x][y] + horizontalCostCalc(this.cost, x, y);
+					horizontalCostCalc(this.cost, x, y);
 				}
 			}
 		}
@@ -119,23 +122,42 @@ public class BasicSeamsCarver extends ImageProcessor {
 		horizontalSeams.add(seam);
 	}
 
-	private long horizontalCostCalc(long[][] cost, int x, int y) {
+	private void horizontalCostCalc(long[][] cost, int x, int y) {
 		long cU, cH, cD;
-		if (y == 0) {
+		if(y==0){
 			cU = Long.MAX_VALUE;
-			cH = cost[x - 1][y];
-			cD = Math.abs(energy[x][y + 1] - energy[x - 1][y]) + cost[x - 1][y + 1];
-		} else if (y == cost[0].length - 1) {
-			cU = Math.abs(energy[x][y - 1] - energy[x - 1][y]) + cost[x - 1][y - 1];
-			cH = cost[x - 1][y];
+			cH = Long.MAX_VALUE;
+			cD = Math.abs(energy[x][y+1] - energy[x-1][y]);
+			cD += cost[x-1][y+1];
+
+		}else if(y==rows -1 ){
+			cU = Math.abs(energy[x][y - 1] - energy[x - 1][y]);
+			cH = Long.MAX_VALUE;
 			cD = Long.MAX_VALUE;
-		} else {
-			cU = Math.abs(energy[x - 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
-			cH = Math.abs(energy[x - 1][y] - energy[x + 1][y]);
-			cD = Math.abs(energy[x + 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
+			cU += cost[x-1][y-1];
+		}else {
+			cU = Math.abs(energy[x][y - 1] - energy[x - 1][y]) + Math.abs(energy[x][y - 1] - energy[x][y + 1]);
+			cH = Math.abs(energy[x][y - 1] - energy[x][y + 1]);
+			cD = Math.abs(energy[x][y + 1] - energy[x - 1][y]) + Math.abs(energy[x][y - 1] - energy[x][y + 1]);
+
+			cU += cost[x-1][y-1];
+			cH += cost[x-1][y];
+			cD += cost[x-1][y+1];
 		}
-		return Math.min(cU, Math.min(cH, cD));
+
+
+		long min = Math.min(cU, Math.min(cH, cD));
+		if(min == cU){
+			backtrack[x][y] = -1;
+		}else if(min == cH){
+			backtrack[x][y] = 0 ;
+		}else {
+			backtrack[x][y] = 1;
+		}
+		cost[x][y] = energy[x][y] + min;
+
 	}
+
 
 	private LinkedList<Coordinate> seamBacktrack() {
 		LinkedList<Coordinate> seam = new LinkedList<>();
@@ -145,20 +167,12 @@ public class BasicSeamsCarver extends ImageProcessor {
 				minIndex = y;
 			}
 		}
-
 		Coordinate current = new Coordinate(cols - 1, minIndex);
 		seam.add(current);
 
 		for (int x = cols - 1; x > 0; x--) {
 			int y = current.Y;
-			long mid = cost[x - 1][y];
-			long up = y > 0 ? cost[x - 1][y - 1] : Long.MAX_VALUE;
-			long down = y < rows - 1 ? cost[x - 1][y + 1] : Long.MAX_VALUE;
-			if (up < mid && up < down) {
-				y--;
-			} else if (down < mid && down < up) {
-				y++;
-			}
+			y += backtrack[x][y];
 			current = new Coordinate(x - 1, y);
 			seam.add(0, current);
 		}
@@ -173,10 +187,10 @@ public class BasicSeamsCarver extends ImageProcessor {
 		Coordinate[][] tempIndexMatrix = new Coordinate[cols][rows];
 		for (int x = 0; x < cols; x++) {
 			for (int y = 0; y < rows; y++) {
-				if (seam.get(x).Y < y) {
+				if (seam.get(x).Y <= y) {
+					tempIndexMatrix[x][y] = indexMatrix[x][y+1];
+				} else if (seam.get(x).Y > y) {
 					tempIndexMatrix[x][y] = indexMatrix[x][y];
-				} else if (seam.get(x).Y >= y) {
-					tempIndexMatrix[x][y] = indexMatrix[x][y + 1];
 				} else {
 					System.out.println(x + ", " + y);
 				}
