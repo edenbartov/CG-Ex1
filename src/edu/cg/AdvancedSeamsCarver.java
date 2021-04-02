@@ -4,10 +4,12 @@ import java.awt.image.BufferedImage;
 
 public class AdvancedSeamsCarver extends BasicSeamsCarver {
 	// TODO :  Decide on the fields your AdvancedSeamsCarver should include.
-	
+	private Coordinate[][] horizontalIndexMatrix;
+	int offset;
 	public AdvancedSeamsCarver(Logger logger, BufferedImage workingImage,
 			int outWidth, int outHeight, RGBWeights rgbWeights) {
 		super(logger, workingImage, outWidth, outHeight, rgbWeights);
+		horizontalIndexMatrix = new Coordinate[this.outWidth][this.outHeight];
 	}
 	
 	public BufferedImage resizeWithSeamCarving(CarvingScheme carveScheme) {

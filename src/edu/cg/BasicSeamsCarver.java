@@ -41,7 +41,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 	private int[][] backtrack; // Helper matrix for backtracking the cost matrix when finding the optimal seam
 	private Coordinate[][] indexMatrix; // Matrix which maps coordinates to the original pixels in the working image
 	BufferedImage greyscaled; // The grey-scaled version of the image
-	private int[][] greyscaledIntensity;
+	private final int[][] greyscaledIntensity; // The intensity of the pixels in the greyscaled image
 	BufferedImage coloredSeamsImage; // Image to use for the showSeams functionality
 	private int rows; // Number of current rows in the image (changes dynamically)
 	private int cols; // Number of current columns in the image (changes dynamically)
@@ -177,20 +177,18 @@ public class BasicSeamsCarver extends ImageProcessor {
 		if (y == 0){
 			cU = Long.MAX_VALUE;
 			cH = Long.MAX_VALUE;
-			cD = Math.abs(pixelGrayIntensity(x,y + 1) - pixelGrayIntensity(x - 1,y));
+			cD = Math.abs(pixelGrayIntensity(x,y + 1) - pixelGrayIntensity(x - 1, y));
 			cD += cost[x - 1][y + 1];
 
 		} else if (y == rows - 1) {
-			cU = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x - 1,y));
+			cU = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x - 1, y));
 			cH = Long.MAX_VALUE;
 			cD = Long.MAX_VALUE;
 			cU += cost[x - 1][y - 1];
 		} else {
-			cU = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x - 1,y)) +
-					Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x,y + 1));
 			cH = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x,y + 1));
-			cD = Math.abs(pixelGrayIntensity(x,y + 1) - pixelGrayIntensity(x - 1,y)) +
-					Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x,y + 1));
+			cU = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x - 1, y)) + cH;
+			cD = Math.abs(pixelGrayIntensity(x,y + 1) - pixelGrayIntensity(x - 1, y)) + cH;
 
 			cU += cost[x - 1][y - 1];
 			cH += cost[x - 1][y];
@@ -222,11 +220,9 @@ public class BasicSeamsCarver extends ImageProcessor {
 
 		} else {
 
-			cV = Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x + 1,y));
-			cL = Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x,y - 1)) + cV;
-					//Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x + 1,y));
-			cR = Math.abs(pixelGrayIntensity(x + 1,y) - pixelGrayIntensity(x,y - 1)) + cV;
-//					Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x + 1,y));
+			cV = Math.abs(pixelGrayIntensity(x - 1, y) - pixelGrayIntensity(x + 1, y));
+			cL = Math.abs(pixelGrayIntensity(x - 1, y) - pixelGrayIntensity(x,y - 1)) + cV;
+			cR = Math.abs(pixelGrayIntensity(x + 1, y) - pixelGrayIntensity(x,y - 1)) + cV;
 
 			cR += cost[x + 1][y - 1];
 			cV += cost[x][y - 1];
@@ -305,27 +301,26 @@ public class BasicSeamsCarver extends ImageProcessor {
 		}
 		return seam;
 	}
+
+	/**
+	 * Init the greyscaledIntensity matrix
+	 */
 	private void setGrayscale(){
 		forEach((y, x) -> {
 			greyscaledIntensity[x][y] = new Color (greyscaled.getRGB(x,y)).getBlue();
 		});
 	}
 
-
+	/**
+	 * Get the intensity of pixel (x, y) in the greyscaled image
+	 * @param x
+	 * @param y
+	 * @return - the pixel intensity in the original grescaled image
+	 */
 	private int pixelGrayIntensity(int x, int y){
 		Coordinate c = indexMatrix[x][y];
 		return greyscaledIntensity[c.X][c.Y];
 	}
-
-//	/**
-//	 * Return the color of the pixel (x, y) in the given image
-//	 * @param img - the image
-//	 * @param c - the coordinate
-//	 * @return - the color at the given index (as a Color object)
-//	 */
-//	private Color originalIndexColor(BufferedImage img, Coordinate c) {
-//		return new Color(img.getRGB(c.X, c.Y));
-//	}
 
 	/**
 	 * Calculate the new index matrix when factoring in the new seam that will be removed
@@ -399,7 +394,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 	private LinkedList<Coordinate> overrideSeam(LinkedList<Coordinate> seam) {
 		LinkedList<Coordinate> tempSeam = new LinkedList<>();
 		for (Coordinate c : seam) {
-			tempSeam.add(0, indexMatrix[c.X][c.Y]);
+			tempSeam.add(indexMatrix[c.X][c.Y]);
 		}
 		return tempSeam;
 	}
@@ -451,14 +446,15 @@ public class BasicSeamsCarver extends ImageProcessor {
 			for (int i = 0; i < numberOfVerticalSeamsToCarve; i++) {
 				carveVertical();
 			}
+
 			for (LinkedList<Coordinate> seam : verticalSeams) {
 				colorSeam(seam, seamColorRGB);
 			}
-
 		} else {
 			for (int i = 0; i < numberOfHorizontalSeamsToCarve; i++) {
 				carveHorizontal();
 			}
+
 			for (LinkedList<Coordinate> seam : horizontalSeams) {
 				colorSeam(seam, seamColorRGB);
 			}

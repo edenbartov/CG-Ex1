@@ -57,7 +57,6 @@ public class ActionsController extends JPanel {
 				action.run();
 			} catch (Exception ex) {
 				String msg = "Error in " + btnName + "!" + System.lineSeparator() + ex.getMessage();
-				ex.printStackTrace();
 				logger.log(msg);
 				JOptionPane.showMessageDialog(mainComponent, msg, "Error", JOptionPane.ERROR_MESSAGE);
 			}

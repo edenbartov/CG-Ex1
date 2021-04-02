@@ -1,0 +1,104 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"BranchesTreeState\">\n    <expand />\n    <select />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"1856a456-4b48-4475-a19b-dde9c5c96cd3\" name=\"Default Changelist\" comment=\"yarons_commit\">\n      <change beforePath=\"$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$/..\" />\n  </component>\n  <component name=\"GitSEFilterConfiguration\">\n    <file-type-list>\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\n      <filtered-out-file-type name=\"TAG\" />\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\n    </file-type-list>\n  </component>\n  <component name=\"ProjectId\" id=\"1q9lziP4SFLVEfG1RZ27dDXoboW\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"aspect.path.notification.shown\" value=\"true\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\n    <property name=\"nodejs_package_manager_path\" value=\"npm\" />\n    <property name=\"project.structure.last.edited\" value=\"Modules\" />\n    <property name=\"project.structure.proportion\" value=\"0.15\" />\n    <property name=\"project.structure.side.proportion\" value=\"0.2\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"preferences.general\" />\n  </component>\n  <component name=\"RunManager\">\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"MAIN_CLASS_NAME\" value=\"edu.cg.Main\" />\n      <module name=\"src\" />\n      <extension name=\"coverage\">\n        <pattern>\n          <option name=\"PATTERN\" value=\"edu.cg.*\" />\n          <option name=\"ENABLED\" value=\"true\" />\n        </pattern>\n      </extension>\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <configuration default=\"true\" type=\"ArquillianTestNG\" factoryName=\"\" nameIsGenerated=\"true\">\n      <option name=\"arquillianRunConfiguration\">\n        <value>\n          <option name=\"containerStateName\" value=\"\" />\n        </value>\n      </option>\n      <option name=\"TEST_OBJECT\" value=\"CLASS\" />\n      <properties />\n      <listeners />\n      <method v=\"2\">\n        <option name=\"Make\" enabled=\"true\" />\n      </method>\n    </configuration>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Application.Main\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"1856a456-4b48-4475-a19b-dde9c5c96cd3\" name=\"Default Changelist\" comment=\"\" />\n      <created>1616499950438</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1616499950438</updated>\n      <workItem from=\"1616499951635\" duration=\"17308000\" />\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"yarons_commit\">\n      <created>1617267763890</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1617267763890</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"2\" />\n    <servers />\n  </component>\n  <component name=\"TypeScriptGeneratedFilesManager\">\n    <option name=\"version\" value=\"3\" />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"yarons_commit\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"yarons_commit\" />\n  </component>\n  <component name=\"WindowStateProjectService\">\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.bottom\" timestamp=\"1617267537164\">\n      <screen x=\"0\" y=\"25\" width=\"1920\" height=\"969\" />\n    </state>\n    <state width=\"1750\" height=\"203\" key=\"GridCell.Tab.0.bottom/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175\" timestamp=\"1617209401345\" />\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.bottom/0.25.1920.969@0.25.1920.969\" timestamp=\"1617267537164\" />\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.center\" timestamp=\"1617267537163\">\n      <screen x=\"0\" y=\"25\" width=\"1920\" height=\"969\" />\n    </state>\n    <state width=\"1750\" height=\"203\" key=\"GridCell.Tab.0.center/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175\" timestamp=\"1617209401345\" />\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.center/0.25.1920.969@0.25.1920.969\" timestamp=\"1617267537163\" />\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.left\" timestamp=\"1617267537163\">\n      <screen x=\"0\" y=\"25\" width=\"1920\" height=\"969\" />\n    </state>\n    <state width=\"1750\" height=\"203\" key=\"GridCell.Tab.0.left/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175\" timestamp=\"1617209401344\" />\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.left/0.25.1920.969@0.25.1920.969\" timestamp=\"1617267537163\" />\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.right\" timestamp=\"1617267537164\">\n      <screen x=\"0\" y=\"25\" width=\"1920\" height=\"969\" />\n    </state>\n    <state width=\"1750\" height=\"203\" key=\"GridCell.Tab.0.right/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175\" timestamp=\"1617209401345\" />\n    <state width=\"1878\" height=\"447\" key=\"GridCell.Tab.0.right/0.25.1920.969@0.25.1920.969\" timestamp=\"1617267537164\" />\n    <state x=\"560\" y=\"247\" key=\"Vcs.Push.Dialog.v2\" timestamp=\"1617267765719\">\n      <screen x=\"0\" y=\"25\" width=\"1920\" height=\"969\" />\n    </state>\n    <state x=\"560\" y=\"247\" key=\"Vcs.Push.Dialog.v2/0.25.1920.969@0.25.1920.969\" timestamp=\"1617267765719\" />\n    <state x=\"715\" y=\"459\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2\" timestamp=\"1617263712246\">\n      <screen x=\"0\" y=\"25\" width=\"1792\" height=\"1009\" />\n    </state>\n    <state x=\"-1154\" y=\"488\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175\" timestamp=\"1617207621705\" />\n    <state x=\"715\" y=\"459\" key=\"com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1792.1009@0.25.1792.1009\" timestamp=\"1617263712246\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 73384ac54182bbe7bf2e35fcaf4968c51b694312)
++++ b/.idea/workspace.xml	(date 1617277120288)
+@@ -9,7 +9,7 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="1856a456-4b48-4475-a19b-dde9c5c96cd3" name="Default Changelist" comment="yarons_commit">
+-      <change beforePath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -18,6 +18,7 @@
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
++    <option name="UPDATE_TYPE" value="REBASE" />
+   </component>
+   <component name="GitSEFilterConfiguration">
+     <file-type-list>
+@@ -45,6 +46,19 @@
+     <property name="settings.editor.selected.configurable" value="preferences.general" />
+   </component>
+   <component name="RunManager">
++    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
++      <option name="arquillianRunConfiguration">
++        <value>
++          <option name="containerStateName" value="" />
++        </value>
++      </option>
++      <option name="TEST_OBJECT" value="CLASS" />
++      <properties />
++      <listeners />
++      <method v="2">
++        <option name="Make" enabled="true" />
++      </method>
++    </configuration>
+     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+       <option name="MAIN_CLASS_NAME" value="edu.cg.Main" />
+       <module name="src" />
+@@ -58,19 +72,6 @@
+         <option name="Make" enabled="true" />
+       </method>
+     </configuration>
+-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+-      <option name="arquillianRunConfiguration">
+-        <value>
+-          <option name="containerStateName" value="" />
+-        </value>
+-      </option>
+-      <option name="TEST_OBJECT" value="CLASS" />
+-      <properties />
+-      <listeners />
+-      <method v="2">
+-        <option name="Make" enabled="true" />
+-      </method>
+-    </configuration>
+     <recent_temporary>
+       <list>
+         <item itemvalue="Application.Main" />
+@@ -116,35 +117,4 @@
+     <MESSAGE value="yarons_commit" />
+     <option name="LAST_COMMIT_MESSAGE" value="yarons_commit" />
+   </component>
+-  <component name="WindowStateProjectService">
+-    <state width="1878" height="447" key="GridCell.Tab.0.bottom" timestamp="1617267537164">
+-      <screen x="0" y="25" width="1920" height="969" />
+-    </state>
+-    <state width="1750" height="203" key="GridCell.Tab.0.bottom/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401345" />
+-    <state width="1878" height="447" key="GridCell.Tab.0.bottom/0.25.1920.969@0.25.1920.969" timestamp="1617267537164" />
+-    <state width="1878" height="447" key="GridCell.Tab.0.center" timestamp="1617267537163">
+-      <screen x="0" y="25" width="1920" height="969" />
+-    </state>
+-    <state width="1750" height="203" key="GridCell.Tab.0.center/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401345" />
+-    <state width="1878" height="447" key="GridCell.Tab.0.center/0.25.1920.969@0.25.1920.969" timestamp="1617267537163" />
+-    <state width="1878" height="447" key="GridCell.Tab.0.left" timestamp="1617267537163">
+-      <screen x="0" y="25" width="1920" height="969" />
+-    </state>
+-    <state width="1750" height="203" key="GridCell.Tab.0.left/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401344" />
+-    <state width="1878" height="447" key="GridCell.Tab.0.left/0.25.1920.969@0.25.1920.969" timestamp="1617267537163" />
+-    <state width="1878" height="447" key="GridCell.Tab.0.right" timestamp="1617267537164">
+-      <screen x="0" y="25" width="1920" height="969" />
+-    </state>
+-    <state width="1750" height="203" key="GridCell.Tab.0.right/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617209401345" />
+-    <state width="1878" height="447" key="GridCell.Tab.0.right/0.25.1920.969@0.25.1920.969" timestamp="1617267537164" />
+-    <state x="560" y="247" key="Vcs.Push.Dialog.v2" timestamp="1617267765719">
+-      <screen x="0" y="25" width="1920" height="969" />
+-    </state>
+-    <state x="560" y="247" key="Vcs.Push.Dialog.v2/0.25.1920.969@0.25.1920.969" timestamp="1617267765719" />
+-    <state x="715" y="459" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1617263712246">
+-      <screen x="0" y="25" width="1792" height="1009" />
+-    </state>
+-    <state x="-1154" y="488" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1920.-17.1920.1175/0.25.1792.1009@-1920.-17.1920.1175" timestamp="1617207621705" />
+-    <state x="715" y="459" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1792.1009@0.25.1792.1009" timestamp="1617263712246" />
+-  </component>
+ </project>
+\ No newline at end of file

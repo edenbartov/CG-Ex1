@@ -10,8 +10,11 @@
   <component name="ChangeListManager">
     <list default="true" id="1856a456-4b48-4475-a19b-dde9c5c96cd3" name="Default Changelist" comment="add vertical">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edu/cg/AdvancedSeamsCarver.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/AdvancedSeamsCarver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/BasicSeamsCarver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edu/cg/menu/components/ActionsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/edu/cg/menu/components/ActionsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/AdvancedSeamsCarver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/AdvancedSeamsCarver.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/src/edu/cg/BasicSeamsCarver.class" afterDir="false" />
     </list>
@@ -50,19 +53,6 @@
     <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.cg.Main" />
-      <module name="src" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="edu.cg.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -72,6 +62,19 @@
       <option name="TEST_OBJECT" value="CLASS" />
       <properties />
       <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.cg.Main" />
+      <module name="src" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.cg.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
