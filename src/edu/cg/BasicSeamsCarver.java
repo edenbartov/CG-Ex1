@@ -41,6 +41,7 @@ public class BasicSeamsCarver extends ImageProcessor {
 	private int[][] backtrack; // Helper matrix for backtracking the cost matrix when finding the optimal seam
 	private Coordinate[][] indexMatrix; // Matrix which maps coordinates to the original pixels in the working image
 	BufferedImage greyscaled; // The grey-scaled version of the image
+	private int[][] greyscaledIntensity;
 	BufferedImage coloredSeamsImage; // Image to use for the showSeams functionality
 	private int rows; // Number of current rows in the image (changes dynamically)
 	private int cols; // Number of current columns in the image (changes dynamically)
@@ -57,7 +58,8 @@ public class BasicSeamsCarver extends ImageProcessor {
 		cost = new long[this.inWidth][this.inHeight];
 		energy = new long[this.inWidth][this.inHeight];
 		backtrack = new int[this.inWidth][this.inHeight];
-
+		greyscaledIntensity = new int[this.inWidth][this.inHeight];
+		setGrayscale();
 		rows = this.inHeight;
 		cols = this.inWidth;
 
@@ -128,16 +130,16 @@ public class BasicSeamsCarver extends ImageProcessor {
 				if (x == 0) {
 					cost[x][y] = energy[x][y];
 				} else {
-					horizontalCostCalc(this.cost, x, y);
+					horizontalCostCalc(x, y);
 				}
 			}
 		}
 
 		LinkedList<Coordinate> seam = horizontalSeamBacktrack();
 		rows--;
+		LinkedList<Coordinate> overriddenSeam = overrideSeam(seam);
 		newIndexMatrix(seam,false);
-		seam = overrideSeam(seam);
-		horizontalSeams.add(seam);
+		horizontalSeams.add(overriddenSeam);
 	}
 
 	/**
@@ -147,47 +149,48 @@ public class BasicSeamsCarver extends ImageProcessor {
 		energyCalc();
 		cost = new long[cols][rows];
 		backtrack = new int[cols][rows];
-		for (int x = 0; x < cols; x++) {
-			for (int y = 0; y < rows; y++) {
+		for (int y = 0; y < rows; y++) {
+			for (int x = 0; x < cols; x++) {
 				if (y == 0) {
 					cost[x][y] = energy[x][y];
 				} else {
-					verticalCostCalc(this.cost, x, y);
+					verticalCostCalc(x, y);
 				}
 			}
 		}
 
 		LinkedList<Coordinate> seam = verticalSeamBacktrack();
 		cols--;
+		LinkedList<Coordinate> overriddenSeam = overrideSeam(seam);
 		newIndexMatrix(seam,true);
-		seam = overrideSeam(seam);
-		verticalSeams.add(seam);
+		verticalSeams.add(overriddenSeam);
 	}
 
 	/**
 	 * Calculate the value of the cell (x, y) in the cost matrix using dynamic programming
 	 * for horizontal seam carving
-	 * @param cost
 	 * @param x
 	 * @param y
 	 */
-	private void horizontalCostCalc(long[][] cost, int x, int y) {
+	private void horizontalCostCalc(int x, int y) {
 		long cU, cH, cD;
 		if (y == 0){
 			cU = Long.MAX_VALUE;
 			cH = Long.MAX_VALUE;
-			cD = Math.abs(energy[x][y + 1] - energy[x - 1][y]);
+			cD = Math.abs(pixelGrayIntensity(x,y + 1) - pixelGrayIntensity(x - 1,y));
 			cD += cost[x - 1][y + 1];
 
 		} else if (y == rows - 1) {
-			cU = Math.abs(energy[x][y - 1] - energy[x - 1][y]);
+			cU = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x - 1,y));
 			cH = Long.MAX_VALUE;
 			cD = Long.MAX_VALUE;
 			cU += cost[x - 1][y - 1];
 		} else {
-			cU = Math.abs(energy[x][y - 1] - energy[x - 1][y]) + Math.abs(energy[x][y - 1] - energy[x][y + 1]);
-			cH = Math.abs(energy[x][y - 1] - energy[x][y + 1]);
-			cD = Math.abs(energy[x][y + 1] - energy[x - 1][y]) + Math.abs(energy[x][y - 1] - energy[x][y + 1]);
+			cU = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x - 1,y)) +
+					Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x,y + 1));
+			cH = Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x,y + 1));
+			cD = Math.abs(pixelGrayIntensity(x,y + 1) - pixelGrayIntensity(x - 1,y)) +
+					Math.abs(pixelGrayIntensity(x,y - 1) - pixelGrayIntensity(x,y + 1));
 
 			cU += cost[x - 1][y - 1];
 			cH += cost[x - 1][y];
@@ -200,28 +203,30 @@ public class BasicSeamsCarver extends ImageProcessor {
 	/**
 	 * Calculate the value of the cell (x, y) in the cost matrix using dynamic programming
 	 * for vertical seam carving
-	 * @param cost
 	 * @param x
 	 * @param y
 	 */
-	private void verticalCostCalc(long[][] cost, int x, int y) {
+	private void verticalCostCalc(int x, int y) {
 		long cR, cV, cL;
 		if (x == cols - 1){
 			cR = Long.MAX_VALUE;
 			cV = Long.MAX_VALUE;
-			cL = Math.abs(energy[x - 1][y] - energy[x][y - 1]);
+			cL = Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x,y - 1));
 			cL += cost[x - 1][y - 1];
 
 		} else if(x == 0) {
-			cR = Math.abs(energy[x + 1][y] - energy[x][y - 1]);
+			cR = Math.abs(pixelGrayIntensity(x + 1,y) - pixelGrayIntensity(x,y - 1));
 			cV = Long.MAX_VALUE;
 			cL = Long.MAX_VALUE;
 			cR += cost[x + 1][y - 1];
 
 		} else {
-			cR = Math.abs(energy[x + 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
-			cV = Math.abs(energy[x - 1][y] - energy[x + 1][y]);
-			cL = Math.abs(energy[x - 1][y] - energy[x][y - 1]) + Math.abs(energy[x - 1][y] - energy[x + 1][y]);
+
+			cV = Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x + 1,y));
+			cL = Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x,y - 1)) + cV;
+					//Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x + 1,y));
+			cR = Math.abs(pixelGrayIntensity(x + 1,y) - pixelGrayIntensity(x,y - 1)) + cV;
+//					Math.abs(pixelGrayIntensity(x - 1,y) - pixelGrayIntensity(x + 1,y));
 
 			cR += cost[x + 1][y - 1];
 			cV += cost[x][y - 1];
@@ -300,16 +305,27 @@ public class BasicSeamsCarver extends ImageProcessor {
 		}
 		return seam;
 	}
-
-	/**
-	 * Return the color of the pixel (x, y) in the given image
-	 * @param img - the image
-	 * @param c - the coordinate
-	 * @return - the color at the given index (as a Color object)
-	 */
-	private Color originalIndexColor(BufferedImage img, Coordinate c) {
-		return new Color(img.getRGB(c.X, c.Y));
+	private void setGrayscale(){
+		forEach((y, x) -> {
+			greyscaledIntensity[x][y] = new Color (greyscaled.getRGB(x,y)).getBlue();
+		});
 	}
+
+
+	private int pixelGrayIntensity(int x, int y){
+		Coordinate c = indexMatrix[x][y];
+		return greyscaledIntensity[c.X][c.Y];
+	}
+
+//	/**
+//	 * Return the color of the pixel (x, y) in the given image
+//	 * @param img - the image
+//	 * @param c - the coordinate
+//	 * @return - the color at the given index (as a Color object)
+//	 */
+//	private Color originalIndexColor(BufferedImage img, Coordinate c) {
+//		return new Color(img.getRGB(c.X, c.Y));
+//	}
 
 	/**
 	 * Calculate the new index matrix when factoring in the new seam that will be removed
@@ -353,9 +369,9 @@ public class BasicSeamsCarver extends ImageProcessor {
 				if(y >= rows - 1) {
 					nextY = -1;
 				}
-				int currentColor =  originalIndexColor(greyscaled, indexMatrix[x][y]).getBlue();
-				int Dx = currentColor - originalIndexColor(greyscaled, indexMatrix[x + nextX][y]).getBlue();
-				int Dy = currentColor - originalIndexColor(greyscaled, indexMatrix[x][y + nextY]).getBlue();
+				int currentColor =  pixelGrayIntensity(x,y);
+				int Dx = currentColor - pixelGrayIntensity(x + nextX,y);
+				int Dy = currentColor - pixelGrayIntensity(x,y + nextY);
 				int nextColor = Math.min((int) Math.sqrt((Math.pow(Dx,2) + Math.pow(Dy, 2)) / 2), 255);
 				newEnergy[x][y] = nextColor;
 			}
@@ -434,19 +450,19 @@ public class BasicSeamsCarver extends ImageProcessor {
 		if (showVerticalSeams) {
 			for (int i = 0; i < numberOfVerticalSeamsToCarve; i++) {
 				carveVertical();
-				for (LinkedList<Coordinate> seam : verticalSeams) {
-					colorSeam(seam, seamColorRGB);
-				}
 			}
+			for (LinkedList<Coordinate> seam : verticalSeams) {
+				colorSeam(seam, seamColorRGB);
+			}
+
 		} else {
 			for (int i = 0; i < numberOfHorizontalSeamsToCarve; i++) {
 				carveHorizontal();
-				for (LinkedList<Coordinate> seam : horizontalSeams) {
-					colorSeam(seam, seamColorRGB);
-				}
+			}
+			for (LinkedList<Coordinate> seam : horizontalSeams) {
+				colorSeam(seam, seamColorRGB);
 			}
 		}
-
 		return coloredSeamsImage;
 	}
 }
